@@ -34,7 +34,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            height: 10px;
+            height: 70px;
           "
         >
           <div class="slider-pill"></div>
