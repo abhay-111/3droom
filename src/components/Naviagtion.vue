@@ -15,6 +15,7 @@
         alt=""
       />
     </div>
+    <div @click="closeModal" class="layer-tp"></div>
     <div
       class="slider-parent"
       style="
@@ -51,7 +52,7 @@
           </div>
         </div>
         <div class="container">
-          <div >
+          <div>
             <div class="socials">
               <a
                 href="https://stackoverflow.com/questions/73344760/defineexpose-from-components-script-setup-not-working-in-vue-3"
@@ -99,7 +100,7 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import { defineExpose } from "vue";
-import gsap from 'gsap'
+import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 
 const props = defineProps({
@@ -110,13 +111,7 @@ const props = defineProps({
 });
 const navigationLinks = ref(null);
 const emit = defineEmits(["change-tab", "handle-modal"]);
-const links = reactive([
-  "All",
-  "Youtube",
-  "Amazon",
-  "Spotify",
-  "Newsletter",
-]);
+const links = reactive(["All", "Youtube", "Amazon", "Spotify", "Newsletter"]);
 
 const socialLinks = reactive([
   "https://res.cloudinary.com/qtalk/image/upload/v1680677989/image_290_puiets.png",
@@ -158,12 +153,26 @@ defineExpose({
 const changeScroll = (e) => {
   console.log(e);
 };
+const closeModal = () => {
+  emit("change-tab", 0);
+  emit("handle-modal", false);
+  gsap.to(".slider-parent", { zIndex: -1, duration: 0.6 });
+  gsap.to(".slider", { y: "100%", duration: 0.6 });
+};
 onMounted(() => {
   initDraggable();
 });
 </script>
 
 <style scoped>
+.layer-tp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
 .socials {
   display: flex;
   flex-direction: column;
