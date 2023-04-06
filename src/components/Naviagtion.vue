@@ -15,7 +15,7 @@
         alt=""
       />
     </div>
-    <div @click="closeModal" class="layer-tp"></div>
+    <div v-if="isModalOpen" @click="closeModal" class="layer-tp"></div>
     <div
       class="slider-parent"
       style="
@@ -127,6 +127,7 @@ const initDraggable = () => {
     bounds: ".slider-parent",
     onDragEnd: (val) => {
       if (val.offsetY > 0) {
+        isModalOpen.value = false
         emit("change-tab", 0);
         emit("handle-modal", false);
         gsap.to(".slider-parent", { zIndex: -1, duration: 0.6 });
@@ -138,7 +139,9 @@ const initDraggable = () => {
     },
   });
 };
+const isModalOpen = ref(false)
 function openModal() {
+  isModalOpen.value = true
   emit("handle-modal", true);
   gsap.to(".slider-parent", { zIndex: 1, duration: 0.6 });
   gsap.to(".slider", { y: "0%", duration: 0.6 });
@@ -154,6 +157,7 @@ const changeScroll = (e) => {
   console.log(e);
 };
 const closeModal = () => {
+  isModalOpen.value = false
   emit("change-tab", 0);
   emit("handle-modal", false);
   gsap.to(".slider-parent", { zIndex: -1, duration: 0.6 });
