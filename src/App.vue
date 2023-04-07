@@ -50,14 +50,14 @@ onMounted(() => {
   let pointer = new THREE.Vector2();
   // camera
   const camera = new THREE.PerspectiveCamera(
-    75,
+    65,
     window.innerWidth / window.innerHeight,
     10,
     100000
   );
   let cameraPosition = {
     x: -0,
-    y: 650,
+    y: 950,
     z: 0,
   };
   // if (mobileCheck()) {
@@ -76,8 +76,8 @@ onMounted(() => {
   camera.zoom = 100;
   // scene
   const scene = new THREE.Scene();
-  // const axesHelper = new THREE.AxesHelper(800);
-  // scene.add(axesHelper);
+  const axesHelper = new THREE.AxesHelper(800);
+  scene.add(axesHelper);
 
   // spline scene
   const loader = new SplineLoader();
@@ -92,9 +92,9 @@ onMounted(() => {
   const light = new THREE.PointLight("#F62020", 0, 2400, 7);
   // light.power= 10
   light.position.set(
-    -135.99512532258404,
-    715.6006777569545,
-    -551.8038594965543
+    -95.99512532258404,
+    815.6006777569545,
+    -600.8038594965543
   );
   scene.add(light);
 
@@ -279,15 +279,7 @@ onMounted(() => {
     }
   }
   const t1 = gsap.timeline({yoyo:false,repeat:-1,repeatDelay:0.8});
-  // t1.fromTo(light3.position,{ z: -650, },{z:-500 , duration: 0.75 } );
-  // t1.to(light3.position,{ z: -650,duration: 0.75 } );
-  // t1.fromTo(light2.position,{ z: -700, },{z:-551 , duration: 0.75,});
-  // t1.fromTo(light2.intensity,{ z: -700, },{z:-551 , duration: 0.75,});
-  // t1.to(light2.position,{ z: -700,duration: 0.75 } );
-  // t1.fromTo(light.position,{ z: -700, },{z:-551 , duration: 0.75,} );
-  //  t1.to(light.position,{ z: -700,duration: 0.75 } );
-  // t1.to(light.position, { z: -551, duration: 1 }, 1);
-  t1.fromTo(light3.position,{ z: -465, },{z:-315 , duration: 1,});
+  t1.fromTo(light3.position,{ z: -465, },{z:-415 , duration: 1,});
   t1.fromTo(light3,{ intensity:0 },{ intensity:2.2 , duration : 1,ease:'power1.in'},0);
   t1.to(light3.position,{ z: -465, duration:1 });
   t1.to(light3,{ intensity:0 , duration : 1, ease:'power1.out'},1);
@@ -299,7 +291,7 @@ onMounted(() => {
   t2.to(light2,{ intensity:0 , duration : 1, ease:'power1.out'},1);
   
   const t3 = gsap.timeline({yoyo:false,repeat:-1,delay:1.6,repeatDelay:0.8})
-  t3.fromTo(light.position,{ z: -550, },{z:-451 , duration: 1,});
+  t3.fromTo(light.position,{ z: -650, },{z:-551 , duration: 1,});
   t3.fromTo(light,{ intensity:0 },{ intensity:2.6 , duration : 1,ease:'power1.in'},0);
   t3.to(light.position,{ z: -550, duration:1 });
   t3.to(light,{ intensity:0 , duration : 1, ease:'power1.out'},1);
