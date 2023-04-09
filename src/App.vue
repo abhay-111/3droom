@@ -114,13 +114,15 @@ onMounted(() => {
   );
   scene.add(light3);
 
-  // const light2 = new THREE.PointLight("0xff0000", 550, lightIntensity, 15);
-  // // light.power= 10
-  // light2.position.set(70.99512532258404, 900.6006777569545, -691.8038594965543);
-  // scene.add(light2);
 
-  // const axesHelper = new THREE.AxesHelper(800);
-  // scene.add(axesHelper);
+
+  // const light4 = new THREE.PointLight("0xff0000", 4, 2500, 2);
+  // // light.power= 10
+  // light4.position.set(-1050.99512532258404, 900, -1);
+  // scene.add(light4);
+
+  const axesHelper = new THREE.AxesHelper(800);
+  scene.add(axesHelper);
 
   // renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -142,8 +144,8 @@ onMounted(() => {
   controls.dampingFactor = 0.125;
   controls.maxZoom = 10;
   controls.enablePan = false;
-  controls.minPolarAngle = (Math.PI / 180) * 45; // radians
-  controls.maxPolarAngle = (Math.PI / 180) * 75; // radians
+  controls.minPolarAngle = (Math.PI / 180) * 35; // radians
+  controls.maxPolarAngle = (Math.PI / 180) * 50; // radians
   controls.rotateSpeed *= -1;
 
   // How far you can orbit horizontally, upper and lower limits.
