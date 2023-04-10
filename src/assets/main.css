@@ -6,6 +6,10 @@ body {
   height: 100%;
 	overflow: hidden;
 }
+@font-face {
+  font-family: "Telegraf";
+  src: url('./fonts/Telegraf-Regular.woff2') format('woff2');
+}
 canvas {
   display: block;
 }
@@ -13,7 +17,7 @@ canvas {
 * {
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
-      font-family: "Poppins", sans-serif;
+      font-family: "Telegraf";
       box-sizing: border-box;
     }
     .loader {
@@ -125,6 +129,9 @@ canvas {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      height: 600px;
+      overflow: hidden;
+      overflow-y: auto;
       width: 100%;
       align-items: center;
     }
@@ -132,7 +139,7 @@ canvas {
       display: none; /* Safari and Chrome */
     }
     .main-links .cta-links {
-      height: 172px;
+      height: 145px;
       min-width: 280px;
       max-width: 340px;
       width: 100%;
@@ -149,7 +156,7 @@ canvas {
       display: flex;
       max-width: 320px;
       overflow-x: scroll;
-      min-height: 24px;
+     height: 40px;
       align-items: center;
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none;
@@ -170,7 +177,8 @@ canvas {
       font-weight: 500;
       line-height: 136%;
       letter-spacing: 0.02em;
-      color: #FFFFFF;
+      color: #595959;
+      z-index: 1;
 
     }
     .current{

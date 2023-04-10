@@ -4,93 +4,50 @@
       <div class="profile">
         <img
           src="https://res.cloudinary.com/qtalk/image/upload/v1679578980/ssup-landing/v2/blurs/JAM/image_103_ek4zex.png"
-          alt=""
-        />
+          alt="" />
         <p>Varun Duggirala</p>
       </div>
-      <img
-        style="height: 24px; width: 24px"
-        @click="openModal"
+      <img style="height: 24px; width: 24px" @click="openModal"
         src="https://res.cloudinary.com/qtalk/image/upload/v1679578987/ssup-landing/v2/blurs/JAM/Frame_427319799_na3u4t.png"
-        alt=""
-      />
+        alt="" />
     </div>
     <div v-if="isModalOpen" @click="closeModal" class="layer-tp"></div>
-    <div
-      class="slider-parent"
-      style="
-        z-index: -1;
-        height: 160%;
-        width: 100%;
-        position: absolute;
-        bottom: 0px;
-        transform: translateY(50%);
-      "
-    >
+    <div class="slider-parent" style="
+              z-index: -1;
+              height: 160%;
+              width: 100%;
+              position: absolute;
+              bottom: 0px;
+              transform: translateY(50%);
+            ">
       <div class="slider">
-        <div
-          class="slider-trigger"
-          style="
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            height: 70px;
-          "
-        >
+        <div class="slider-trigger" style="
+                  width: 100%;
+                  display: flex;
+                  justify-content: center;
+                  height: 70px;
+                ">
           <div class="slider-pill"></div>
         </div>
 
         <div @scroll="changeScroll" ref="navigationLinks" class="link-nav">
-          <div
-            @click="changeTab(i)"
-            v-for="(link, i) in links"
-            :key="i"
-            class="nav-pills"
-            :class="i == currentTab ? 'current' : ''"
-          >
+          <div @click="changeTab(i)" v-for="(link, i) in links" :key="i" class="nav-pills">
             {{ link }}
           </div>
+          <div class="label" ref="label"></div>
         </div>
         <div class="container">
           <div>
             <div class="socials">
-              <a
-                href="https://stackoverflow.com/questions/73344760/defineexpose-from-components-script-setup-not-working-in-vue-3"
-                target="_blank"
-                style="display: flex; gap: 36px; flex: 1 1 0%"
-              >
-                <img
-                  v-for="(link, i) in socialLinks"
-                  style="height: 36px; width: 36px"
-                  :key="i"
-                  :src="link"
-                  alt=""
-                />
+              <a href="https://stackoverflow.com/questions/73344760/defineexpose-from-components-script-setup-not-working-in-vue-3"
+                target="_blank" style="display: flex; gap: 36px; flex: 1 1 0%">
+                <img v-for="(link, i) in socialLinks" style="height: 36px; width: 36px" :key="i" :src="link" alt="" />
               </a>
             </div>
           </div>
-          <div class="main-links">
-            <img
-              src="https://res.cloudinary.com/qtalk/image/upload/v1679603002/image_243_bbcqu8.png"
-              alt=""
-              class="cta-links"
-            />
-            <img
-              src="https://res.cloudinary.com/qtalk/image/upload/v1679581042/ssup-landing/v2/blurs/JAM/Card_1_plnbmg.png"
-              alt=""
-              class="cta-links"
-            />
-            <img
-              src="https://res.cloudinary.com/qtalk/image/upload/v1679602950/Property_1_Default_cgzw3k.png"
-              alt=""
-              class="cta-links"
-            />
-            <img
-              src="https://res.cloudinary.com/qtalk/image/upload/v1679581042/ssup-landing/v2/blurs/JAM/Card_1_plnbmg.png"
-              alt=""
-              class="cta-links"
-            />
-          </div>
+          <Transition name="fade">
+            <LinksTabs :links="getTabLinks" />
+          </Transition>
         </div>
       </div>
     </div>
@@ -98,8 +55,9 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref,Transition } from "vue";
 import { defineExpose } from "vue";
+import LinksTabs from "./LinksTabs.vue";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 
@@ -110,15 +68,37 @@ const props = defineProps({
   },
 });
 const navigationLinks = ref(null);
+const label = ref()
 const emit = defineEmits(["change-tab", "handle-modal"]);
 const links = reactive(["All", "Youtube", "Amazon", "Spotify", "Newsletter"]);
+const tabLinks = ref({
+  all: [
+    'https://res.cloudinary.com/qtalk/image/upload/v1679603002/image_243_bbcqu8.png',
+    'https://res.cloudinary.com/qtalk/image/upload/v1679581042/ssup-landing/v2/blurs/JAM/Card_1_plnbmg.png',
+    'https://res.cloudinary.com/qtalk/image/upload/v1679602950/Property_1_Default_cgzw3k.png',
+    'https://res.cloudinary.com/qtalk/image/upload/v1679581042/ssup-landing/v2/blurs/JAM/Card_1_plnbmg.png'
+  ],
+  youtube: [
+    'https://res.cloudinary.com/qtalk/image/upload/v1681107080/superbio-3d/youtubenew_2_ow9xpd.png',
+    'https://res.cloudinary.com/qtalk/image/upload/v1681107080/superbio-3d/youtubenew_3_ldcb3p.png'
+  ],
+  spotify: [
+    'https://res.cloudinary.com/qtalk/image/upload/v1681107121/superbio-3d/spotifynew_1_1_nne4te.png',
+    'https://res.cloudinary.com/qtalk/image/upload/v1681107121/superbio-3d/spotifynew_1_ww9j9p.png'
+  ],
+  amazon: [
+    'https://res.cloudinary.com/qtalk/image/upload/v1681107081/superbio-3d/%D0%BC%D0%BE%D0%BA%D0%B0%D0%BF1_1_pfabcr.png'
+  ]
 
+})
 const socialLinks = reactive([
-  "https://res.cloudinary.com/qtalk/image/upload/v1680677989/image_290_puiets.png",
-  "https://res.cloudinary.com/qtalk/image/upload/v1680677989/image_290_1_wmprco.png",
-  "https://res.cloudinary.com/qtalk/image/upload/v1680677989/image_288_dey0iy.png",
-  "https://res.cloudinary.com/qtalk/image/upload/v1680677989/Frame_427319881_jg2opn.png",
+  "https://res.cloudinary.com/qtalk/image/upload/v1681109526/superbio-3d/icons/Group_427319365_bz1mc7.svg",
+  "https://res.cloudinary.com/qtalk/image/upload/v1681109526/superbio-3d/icons/Group_427319366_r53hcn.svg",
+  "https://res.cloudinary.com/qtalk/image/upload/v1681109526/superbio-3d/icons/Group_427319368_h1phe8.svg",
+  "https://res.cloudinary.com/qtalk/image/upload/v1681109527/superbio-3d/icons/Group_427319369_ntpd1f.svg",
 ]);
+
+let tl
 const initDraggable = () => {
   gsap.registerPlugin(Draggable);
   Draggable.create(".slider", {
@@ -147,6 +127,16 @@ function openModal() {
   gsap.to(".slider", { y: "0%", duration: 0.6 });
 }
 const changeTab = (i) => {
+  // change tab 
+  if (!tl.isActive()) {
+    const tabsBlock = document.querySelectorAll('.nav-pills');
+    const parent = document.querySelector('.link-nav')
+    const currentTab = tabsBlock[i]
+    const elWidth = currentTab.offsetWidth;
+    const containerLeft = parent.getBoundingClientRect().left;
+    const offsetLeft = currentTab.getBoundingClientRect().left - containerLeft;
+    gsap.to(label.value, { duration: 0.1, left: offsetLeft, width: elWidth });
+  }
   emit("change-tab", i);
 };
 defineExpose({
@@ -163,9 +153,35 @@ const closeModal = () => {
   gsap.to(".slider-parent", { zIndex: -1, duration: 0.6 });
   gsap.to(".slider", { y: "100%", duration: 0.6 });
 };
+
+//
+const sliderInit = () => {
+  const navPills = document.querySelectorAll('.nav-pills');
+  const startElement = navPills[0]
+  const innerWidth = startElement.offsetWidth
+  gsap.set(label.value, { width: innerWidth });
+}
 onMounted(() => {
+  tl = gsap.timeline()
+  sliderInit()
   initDraggable();
 });
+
+const getTabLinks = computed(() => {
+  switch (props.currentTab) {
+    case 0:  //all
+      return [...tabLinks.value['youtube'], ...tabLinks.value['amazon'], ...tabLinks.value['spotify']]
+    case 1:
+      return tabLinks.value['youtube']
+    case 2:
+      return tabLinks.value['amazon']
+    case 3:
+      return tabLinks.value['spotify']
+    default:
+      return [...tabLinks.value['youtube'], ...tabLinks.value['amazon'], ...tabLinks.value['spotify']]
+  }
+})
+
 </script>
 
 <style scoped>
@@ -177,6 +193,7 @@ onMounted(() => {
   width: 100%;
   z-index: 1;
 }
+
 .socials {
   display: flex;
   flex-direction: column;
@@ -187,5 +204,30 @@ onMounted(() => {
   width: 312px;
   background: rgba(12, 12, 12, 0.21);
   border-radius: 16px;
+}
+
+.label {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  background: #ffffff;
+  height: 20px;
+  transition: 200ms;
+  border-radius: 8px;
+  z-index: -1;
+}
+
+.link-nav {
+  position: relative;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
