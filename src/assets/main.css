@@ -160,11 +160,10 @@ canvas {
   display: flex;
   max-width: 320px;
   overflow-x: scroll;
-  height: 40px;
+  min-height: 40px;
   align-items: center;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
-  margin-top: -10px;
 }
 .link-nav::-webkit-scrollbar {
   display: none;
