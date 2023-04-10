@@ -11,7 +11,7 @@
         src="https://res.cloudinary.com/qtalk/image/upload/v1679578987/ssup-landing/v2/blurs/JAM/Frame_427319799_na3u4t.png"
         alt="" />
     </div>
-    <div v-if="isModalOpen" @click="closeModal" class="layer-tp"></div>
+    <div v-if="isModalOpen" @click.stop="closeModal" class="layer-tp"></div>
     <div class="slider-parent" style="
               z-index: -1;
               height: 160%;
@@ -31,7 +31,7 @@
         </div>
 
         <div @scroll="changeScroll" ref="navigationLinks" class="link-nav">
-          <div @click="changeTab(i)" v-for="(link, i) in links" :key="i" class="nav-pills">
+          <div @click="changeTab(i)" v-for="(link, i) in links" :key="i" class="nav-pills" :style="i===currentTab ? {color:'black'} :{color:'#999597'}">
             {{ link }}
           </div>
           <div class="label" ref="label"></div>
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref,Transition } from "vue";
+import { computed, nextTick, onMounted, reactive, ref,Transition, watch } from "vue";
 import { defineExpose } from "vue";
 import LinksTabs from "./LinksTabs.vue";
 import gsap from "gsap";
@@ -88,7 +88,11 @@ const tabLinks = ref({
   ],
   amazon: [
     'https://res.cloudinary.com/qtalk/image/upload/v1681107081/superbio-3d/%D0%BC%D0%BE%D0%BA%D0%B0%D0%BF1_1_pfabcr.png'
-  ]
+  ],
+  newsletter: [
+    'https://res.cloudinary.com/qtalk/image/upload/v1681107121/superbio-3d/spotifynew_1_1_nne4te.png',
+    'https://res.cloudinary.com/qtalk/image/upload/v1681107121/superbio-3d/spotifynew_1_ww9j9p.png'
+  ],
 
 })
 const socialLinks = reactive([
@@ -123,8 +127,10 @@ const isModalOpen = ref(false)
 function openModal() {
   isModalOpen.value = true
   emit("handle-modal", true);
-  gsap.to(".slider-parent", { zIndex: 1, duration: 0.6 });
+  nextTick(()=>{
+    gsap.to(".slider-parent", { zIndex: 1, duration: 0.6 });
   gsap.to(".slider", { y: "0%", duration: 0.6 });
+  })
 }
 const changeTab = (i) => {
   // change tab 
@@ -132,13 +138,27 @@ const changeTab = (i) => {
     const tabsBlock = document.querySelectorAll('.nav-pills');
     const parent = document.querySelector('.link-nav')
     const currentTab = tabsBlock[i]
+    currentTab.style.color='black'
     const elWidth = currentTab.offsetWidth;
     const containerLeft = parent.getBoundingClientRect().left;
-    const offsetLeft = currentTab.getBoundingClientRect().left - containerLeft;
+    const offsetLeft = currentTab.getBoundingClientRect().left - containerLeft + 100;
     gsap.to(label.value, { duration: 0.1, left: offsetLeft, width: elWidth });
   }
   emit("change-tab", i);
 };
+watch(props,()=>{
+   const tabsBlock = document.querySelectorAll('.nav-pills');
+    const parent = document.querySelector('.link-nav')
+    const currentTab = tabsBlock[props.currentTab]
+    console.log(currentTab)
+    currentTab.style.color='black'
+    const elWidth = currentTab.offsetWidth;
+    console.log(parent.scrollLeft)
+    const containerLeft = parent.getBoundingClientRect().left;
+    console.log(currentTab.getBoundingClientRect().left,currentTab.getBoundingClientRect())
+    const offsetLeft = currentTab.getBoundingClientRect().left - containerLeft + parent.scrollLeft;
+    gsap.to(label.value, { duration: 0.1, left: offsetLeft, width: elWidth });
+})
 defineExpose({
   openModal,
   navigationLinks,
@@ -177,11 +197,13 @@ const getTabLinks = computed(() => {
       return tabLinks.value['amazon']
     case 3:
       return tabLinks.value['spotify']
+      case 3:
+      return tabLinks.value['newsletter']
     default:
       return [...tabLinks.value['youtube'], ...tabLinks.value['amazon'], ...tabLinks.value['spotify']]
   }
 })
-
+// #999597
 </script>
 
 <style scoped>
@@ -209,9 +231,9 @@ const getTabLinks = computed(() => {
 .label {
   position: absolute;
   left: 0;
-  top: 3px;
+  top: 6px;
   background: #ffffff;
-  height: 20px;
+  height: 24px;
   transition: 200ms;
   border-radius: 8px;
   z-index: -1;
