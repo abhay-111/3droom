@@ -138,10 +138,11 @@ const changeTab = (i) => {
     const tabsBlock = document.querySelectorAll('.nav-pills');
     const parent = document.querySelector('.link-nav')
     const currentTab = tabsBlock[i]
+    console.log(currentTab)
     currentTab.style.color='black'
     const elWidth = currentTab.offsetWidth;
     const containerLeft = parent.getBoundingClientRect().left;
-    const offsetLeft = currentTab.getBoundingClientRect().left - containerLeft + 100;
+    const offsetLeft = currentTab.getBoundingClientRect().left - containerLeft + parent.scrollLeft;
     gsap.to(label.value, { duration: 0.1, left: offsetLeft, width: elWidth });
   }
   emit("change-tab", i);
@@ -231,12 +232,13 @@ const getTabLinks = computed(() => {
 .label {
   position: absolute;
   left: 0;
-  top: 6px;
+  top: 50%;
   background: #ffffff;
   height: 24px;
   transition: 200ms;
   border-radius: 8px;
   z-index: -1;
+  transform: translate(0%,-50%);
 }
 
 .link-nav {

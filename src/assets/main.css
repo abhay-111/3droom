@@ -164,7 +164,7 @@ canvas {
   align-items: center;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
-  margin-top: -30px;
+  margin-top: -10px;
 }
 .link-nav::-webkit-scrollbar {
   display: none;
