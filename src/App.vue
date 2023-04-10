@@ -121,8 +121,8 @@ onMounted(() => {
   // light4.position.set(-1050.99512532258404, 900, -1);
   // scene.add(light4);
 
-  const axesHelper = new THREE.AxesHelper(800);
-  scene.add(axesHelper);
+  // const axesHelper = new THREE.AxesHelper(800);
+  // scene.add(axesHelper);
 
   // renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true });
