@@ -56,9 +56,9 @@ onMounted(() => {
     100000
   );
   let cameraPosition = {
-    x: 0,
-    y: 601.5,
-    z: 610,
+    x: -200,
+    y: 600,
+    z: 0,
   };
   // if (mobileCheck()) {
   //   cameraPosition = {
@@ -193,7 +193,9 @@ onMounted(() => {
   }
 
   function onWindowResize() {
+    console.log('Resized')
     camera.aspect = window.innerWidth / window.innerHeight;
+    console.log(camera.aspect)
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
@@ -301,7 +303,7 @@ onMounted(() => {
 
   function animate(time) {
     controls.update();
-    camera.lookAt(0, 601.5,-10);
+    camera.lookAt(0, 500,0);
     renderer.render(scene, camera);
   }
 });
