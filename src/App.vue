@@ -127,7 +127,7 @@ onMounted(() => {
   // renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(window.devicePixelRatio*0.9);
   renderer.setAnimationLoop(animate);
   document.body.appendChild(renderer.domElement);
 
