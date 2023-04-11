@@ -28,7 +28,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <iframe src="https://room-layer.vercel.app/" class="iframw" frameborder="0"></iframe>
+    <iframe src="https://room-layer.vercel.app/"  frameborder="0"></iframe>
     <loader v-if="isLoading"></loader>
     <navigation
       @change-tab="changeTab"
