@@ -151,7 +151,6 @@ watch(props,()=>{
    const tabsBlock = document.querySelectorAll('.nav-pills');
     const parent = document.querySelector('.link-nav')
     const currentTab = tabsBlock[props.currentTab]
-    console.log(currentTab)
     currentTab.style.color='black'
     const elWidth = currentTab.offsetWidth;
     console.log(parent.scrollLeft)
@@ -186,6 +185,22 @@ onMounted(() => {
   tl = gsap.timeline()
   sliderInit()
   initDraggable();
+  window.addEventListener('message', (e)=>{
+    console.log(e.data.data.loading)
+    if(e.data.data?.target.length){
+      console.log(e.data.data?.target)
+      let index =0;
+      switch(e.data.data.target){
+        case 'YT' : index = 1; break;
+        case 'SP' : index = 3; break;
+        case 'AZ' : index = 2; break;
+        case 'CR' : index = 0; break;
+        default : index = 0;
+      }
+      emit('change-tab',index)
+      openModal()
+    }
+ })
 });
 
 const getTabLinks = computed(() => {
