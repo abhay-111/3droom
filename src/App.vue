@@ -56,9 +56,9 @@ onMounted(() => {
     100000
   );
   let cameraPosition = {
-    x: -0,
-    y: 950,
-    z: 0,
+    x: 0,
+    y: 601.5,
+    z: 610,
   };
   // if (mobileCheck()) {
   //   cameraPosition = {
@@ -72,7 +72,7 @@ onMounted(() => {
     max: 15,
   };
   camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-  camera.quaternion.setFromEuler(new THREE.Euler(-0.1, -0.52, -0.05));
+  // camera.quaternion.setFromEuler(new THREE.Euler(-0.1, -0.52, -0.05));
   camera.zoom = 100;
   // scene
   const scene = new THREE.Scene();
@@ -127,6 +127,7 @@ onMounted(() => {
   // renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setAnimationLoop(animate);
   document.body.appendChild(renderer.domElement);
 
@@ -272,7 +273,7 @@ onMounted(() => {
           checkYT(intersects) ||
           checkSP(intersects) ||
           checkAZ(intersects) ||
-          checkCreator(intersects)
+          checkCreator(intersects) || intersects[0].object.name === "Follow me.png"
         ) {
           // openModal();
           navigation.value.openModal();
@@ -300,7 +301,7 @@ onMounted(() => {
 
   function animate(time) {
     controls.update();
-    camera.lookAt(42, 501.5);
+    camera.lookAt(0, 601.5,-10);
     renderer.render(scene, camera);
   }
 });
